@@ -44,6 +44,8 @@ rcon
 
     if (err.code === 'ENOTFOUND') {
       message = 'Invalid host (' + host + ')';
+    } else {
+      message = err.message;
     }
 
     if (!rcon.ready) {
