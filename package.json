@@ -6,7 +6,8 @@
   "preferGlobal": true,
   "main": "samp-rcon.js",
   "bin": {
-    "samp-rcon": "./cli.js"
+    "samp-rcon": "./cli.js",
+    "samp-rcon-web-server": "./web-server.js"
   },
   "scripts": {
     "test": "jshint ."
@@ -20,6 +21,9 @@
     "cli",
     "rcon"
   ],
+  "dependencies": {
+    "socket.io": "*"
+  },
   "licenses": [
     {
       "type": "MIT +no-false-attribs",
