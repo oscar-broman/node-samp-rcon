@@ -1,0 +1,29 @@
+{
+  "name": "samp-rcon",
+  "author": "Oscar Broman <oscar.broman@gmail.com>",
+  "version": "0.1.0",
+  "description": "RCON client for SA-MP servers",
+  "preferGlobal": true,
+  "main": "samp-rcon.js",
+  "bin": {
+    "samp-rcon": "./cli.js"
+  },
+  "scripts": {
+    "test": "jshint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/oscar-broman/node-samp-rcon.git"
+  },
+  "keywords": [
+    "samp",
+    "cli",
+    "rcon"
+  ],
+  "licenses": [
+    {
+      "type": "MIT +no-false-attribs",
+      "url": "https://github.com/oscar-broman/Prawn/raw/master/LICENSE"
+    }
+  ]
+}
