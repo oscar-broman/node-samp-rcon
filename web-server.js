@@ -54,7 +54,15 @@ io.sockets.on('connection', function (socket) {
       rcon = null;
     })
     .on('rcon-connect', function (data) {
-      rcon = new RconConnection(data.host, null, data.pass);
+      try {
+        rcon = new RconConnection(data.host, null, data.pass);
+      } catch (e) {
+        socket.emit('rcon-error', {
+          message: e.message
+        });
+        
+        return;
+      }
     
       rcon
         .on('ready', function() {
