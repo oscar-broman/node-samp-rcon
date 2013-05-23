@@ -11,7 +11,7 @@ var reGetPort = /.*:/;
 var reGetHost = /\s*:.*/;
 var reTrimNewLines = /^[\r\n]+|[\r\n]+$/g;
 
-function RconConnection(host, port, password) {
+function RconConnection(host, port, password, addressOverride) {
   host = host && host.trim();
   port = port || 7777;
 
@@ -39,6 +39,12 @@ function RconConnection(host, port, password) {
   if (host.toLowerCase() === 'localhost') {
     host = '127.0.0.1';
   }
+
+  if (addressOverride && !reValidIp.test(addressOverride)) {
+    throw new Error('addressOverride must be a valid IPv4 address');
+  }
+
+  this.addressOverride = addressOverride;
 
   // Do we need to resolve the host?
   if (reValidIp.test(host)) {
@@ -99,7 +105,13 @@ RconConnection.prototype.send = function(command) {
 
   var message = new Buffer(this.prefix + cmdlen + command, 'binary');
 
-  this.socket.send(message, 0, message.length, this.port, this.address);
+  this.socket.send(
+    message,
+    0,
+    message.length,
+    this.port,
+    this.addressOverride || this.address
+  );
 };
 
 RconConnection.prototype.close = function() {
