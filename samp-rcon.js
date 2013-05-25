@@ -35,6 +35,7 @@ function RconConnection(host, port, password, addressOverride) {
   this.port = port;
   this.password = password;
   this.socket = dgram.createSocket('udp4', this.onMessage.bind(this));
+  this.retryTimeout = null;
 
   if (host.toLowerCase() === 'localhost') {
     host = '127.0.0.1';
@@ -64,6 +65,8 @@ RconConnection.prototype = Object.create(events.EventEmitter.prototype);
 RconConnection.prototype.connectMessage = 'samp-rcon connecting';
 
 RconConnection.prototype.sendConnectMessage = function() {
+  this.retryTimeout = null;
+
   if (this.ready) {
     return;
   }
@@ -71,7 +74,7 @@ RconConnection.prototype.sendConnectMessage = function() {
   this.send('echo ' + this.connectMessage);
 
   // Keep sending the message until it has been sent back
-  setTimeout(this.sendConnectMessage.bind(this), 250);
+  this.retryTimeout = setTimeout(this.sendConnectMessage.bind(this), 250);
 };
 
 RconConnection.prototype.hostResolve = function(err, address) {
@@ -116,6 +119,12 @@ RconConnection.prototype.send = function(command) {
 
 RconConnection.prototype.close = function() {
   this.socket.close();
+
+  if (this.retryTimeout !== null) {
+    clearTimeout(this.retryTimeout);
+
+    this.retryTimeout = null;
+  }
 };
 
 RconConnection.prototype.onMessage = function(msg) {
