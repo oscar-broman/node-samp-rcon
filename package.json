@@ -1,7 +1,7 @@
 {
   "name": "samp-rcon",
   "author": "Oscar Broman <oscar.broman@gmail.com>",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "RCON client for SA-MP servers",
   "preferGlobal": true,
   "main": "samp-rcon.js",
@@ -21,9 +21,7 @@
     "cli",
     "rcon"
   ],
-  "dependencies": {
-    "socket.io": "*"
-  },
+  "dependencies": {},
   "licenses": [
     {
       "type": "MIT +no-false-attribs",

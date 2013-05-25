@@ -3,9 +3,18 @@
 'use strict';
 
 var app = require('http').createServer(handler);
-var io = require('socket.io').listen(app);
 var fs = require('fs');
 var RconConnection = require('./samp-rcon');
+
+try {
+	var io = require('socket.io').listen(app);
+} catch (e) {
+	console.error('Error: socket.io is required. ' +
+                'Install it using the following command:');
+	console.error('  npm install socket.io');
+
+	process.exit(1);
+}
 
 var port = +process.argv[2] || 3000;
 
@@ -51,7 +60,9 @@ io.sockets.on('connection', function (socket) {
 
   socket
     .on('disconnect', function() {
-      rcon.close();
+      if (rcon) {
+        rcon.close();
+      }
 
       rcon = null;
     })
