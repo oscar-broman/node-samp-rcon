@@ -20,7 +20,7 @@ console.log('Connecting..');
 rcon
   .on('ready', function() {
     console.log('Connected!');
-    
+
     process.stdin.resume();
     process.stdin.setEncoding('binary');
 

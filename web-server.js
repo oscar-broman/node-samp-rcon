@@ -13,7 +13,7 @@ app.listen(port);
 
 function handler(req, res) {
   var file, type;
-  
+
   if (req.url === '/') {
     file = 'index.html';
     type = 'text/html';
@@ -24,7 +24,7 @@ function handler(req, res) {
     file = 'main.js';
     type = 'application/javascript';
   }
-  
+
   if (file) {
     fs.readFile(
       __dirname + '/' + file,
@@ -48,11 +48,11 @@ io.set('log level', 2);
 
 io.sockets.on('connection', function (socket) {
   var rcon;
-  
+
   socket
     .on('disconnect', function() {
       rcon.close();
-      
+
       rcon = null;
     })
     .on('rcon-connect', function (data) {
@@ -62,10 +62,10 @@ io.sockets.on('connection', function (socket) {
         socket.emit('rcon-error', {
           message: e.message
         });
-        
+
         return;
       }
-    
+
       rcon
         .on('ready', function() {
           socket.emit('rcon-connect');
