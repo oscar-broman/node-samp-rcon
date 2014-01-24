@@ -1,7 +1,7 @@
 {
   "name": "samp-rcon",
   "author": "Oscar Broman <oscar.broman@gmail.com>",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "RCON client for SA-MP servers",
   "preferGlobal": true,
   "main": "samp-rcon.js",
