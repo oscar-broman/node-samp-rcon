@@ -25,10 +25,10 @@ rcon
   .on('ready', function() {
     if (command) {
       rcon.send(command);
-      
+
       return;
     }
-    
+
     console.log('Connected!');
 
     process.stdin.resume();
@@ -48,12 +48,12 @@ rcon
   })
   .on('message', function(msg) {
     console.log(msg.trimRight());
-    
+
     if (command) {
       if (closeTimeout !== null) {
         clearTimeout(closeTimeout);
       }
-      
+
       closeTimeout = setTimeout(rcon.close.bind(rcon), 250);
     }
   })
