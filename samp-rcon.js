@@ -9,7 +9,6 @@ module.exports = RconConnection;
 var reValidIp = /^\d+\.\d+\.\d+\.\d+$/;
 var reGetPort = /.*:/;
 var reGetHost = /\s*:.*/;
-var reTrimNewLines = /^[\r\n]+|[\r\n]+$/g;
 
 function RconConnection(host, port, password, addressOverride) {
   host = host && host.trim();
@@ -131,7 +130,7 @@ RconConnection.prototype.onMessage = function(msg) {
   if (msg.toString('binary', 0, 11) === this.responsePrefix) {
     var len = msg.readUInt16LE(11);
 
-    msg = msg.toString('binary', 13).replace(reTrimNewLines, '');
+    msg = msg.toString('binary', 13);
 
     if (msg.length !== len) {
       console.warn(
