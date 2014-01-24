@@ -139,7 +139,10 @@ RconConnection.prototype.onMessage = function(msg) {
           JSON.stringify(msg)
       );
     } else if (!this.ready) {
-      if (msg === this.connectMessage) {
+      if (msg === 'Invalid RCON password.') {
+        this.emit('error', new Error('Invalid RCON password'));
+        this.close();
+      } else if (msg === this.connectMessage) {
         this.ready = true;
         this.emit('ready');
       }
