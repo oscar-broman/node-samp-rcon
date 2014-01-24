@@ -53,6 +53,6 @@ rcon
 
       process.exit();
     } else {
-      console.log('An error occured: ' + message);
+      console.log('An error occurred: ' + message);
     }
   });
