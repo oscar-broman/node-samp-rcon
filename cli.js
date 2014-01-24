@@ -6,19 +6,29 @@ var RconConnection = require('./samp-rcon');
 
 var host = process.argv[2];
 var password = process.argv[3];
+var command = process.argv[4];
 
 if (!host || !password) {
-  console.error('Usage: samp-rcon [host] [password]');
+  console.error('Usage: samp-rcon <host> <password> [command]');
 
   process.exit();
 }
 
 var rcon = new RconConnection(host, null, password);
+var closeTimeout = null;
 
-console.log('Connecting..');
+if (!command) {
+  console.log('Connecting..');
+}
 
 rcon
   .on('ready', function() {
+    if (command) {
+      rcon.send(command);
+      
+      return;
+    }
+    
     console.log('Connected!');
 
     process.stdin.resume();
@@ -38,6 +48,14 @@ rcon
   })
   .on('message', function(msg) {
     console.log(msg.trimRight());
+    
+    if (command) {
+      if (closeTimeout !== null) {
+        clearTimeout(closeTimeout);
+      }
+      
+      closeTimeout = setTimeout(rcon.close.bind(rcon), 250);
+    }
   })
   .on('error', function(err) {
     var message;
